@@ -1,4 +1,4 @@
-#include "Converter.hpp"
+#include "TypeConverter.hpp"
 #include <iomanip>
 #include <ios>
 #include <iostream>
@@ -20,10 +20,10 @@ int main()
     };
     int    size       = sizeof(arr) / sizeof(arr[0]);
     action actions[4] = {
-        {   "int",    Converter::isInt},
-        {  "char",   Converter::isChar},
-        { "float",  Converter::isFloat},
-        {"double", Converter::isDouble},
+        {   "int",    TypeConverter::isInt},
+        {  "char",   TypeConverter::isChar},
+        { "float",  TypeConverter::isFloat},
+        {"double", TypeConverter::isDouble},
     };
 
     std::cout << std::string(5 * 12 + 5, '-') << std::endl;

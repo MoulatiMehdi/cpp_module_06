@@ -4,9 +4,9 @@ CXX = c++
 RMFLAGS  = -rf 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-DEPS = Converter.hpp 
-SRCS = Converter.cpp
-TEST_SRCS = $(SRCS) tests/Converter.test.cpp
+DEPS = TypeConverter.hpp 
+SRCS = TypeConverter.cpp
+TEST_SRCS = $(SRCS) tests/TypeConverter.test.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 TEST = test
