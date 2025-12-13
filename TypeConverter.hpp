@@ -3,14 +3,14 @@
 
 #include <string>
 
-class Converter
+class TypeConverter
 {
   private:
-    Converter();
-    Converter(const std::string &str);
-    Converter(const Converter &other);
-    ~Converter();
-    Converter &operator=(const Converter &other);
+    TypeConverter();
+    TypeConverter(const std::string &str);
+    TypeConverter(const TypeConverter &other);
+    ~TypeConverter();
+    TypeConverter &operator=(const TypeConverter &other);
 
   public:
     enum Type

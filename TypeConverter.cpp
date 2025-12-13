@@ -1,31 +1,31 @@
-#include "Converter.hpp"
+#include "TypeConverter.hpp"
 #include <cctype>
 #include <climits>
 #include <cmath>
 
-Converter::Converter()
+TypeConverter::TypeConverter()
 {
 }
 
-Converter::Converter(const Converter &)
+TypeConverter::TypeConverter(const TypeConverter &)
 {
 }
 
-Converter &Converter::operator=(const Converter &)
+TypeConverter &TypeConverter::operator=(const TypeConverter &)
 {
     return *this;
 }
 
-Converter::~Converter()
+TypeConverter::~TypeConverter()
 {
 }
 
-bool Converter::isChar(const std::string &str)
+bool TypeConverter::isChar(const std::string &str)
 {
     return str.length() == 1 && !isdigit(str[0]);
 }
 
-bool Converter::isInt(const std::string &str)
+bool TypeConverter::isInt(const std::string &str)
 {
     size_t i   = 0;
     size_t len = str.length();
@@ -40,7 +40,7 @@ bool Converter::isInt(const std::string &str)
     return i == len;
 }
 
-bool Converter::isFloat(const std::string &str)
+bool TypeConverter::isFloat(const std::string &str)
 {
     size_t i   = 0;
     size_t len = str.length();
@@ -73,7 +73,7 @@ bool Converter::isFloat(const std::string &str)
     return i == len;
 }
 
-bool Converter::isDouble(const std::string &str)
+bool TypeConverter::isDouble(const std::string &str)
 {
     if (str == "+inf" || str == "-inf" || str == "nan")
         return true;
@@ -102,7 +102,7 @@ bool Converter::isDouble(const std::string &str)
     return i == len;
 }
 
-Converter::Type Converter::getLiteralType(const std::string &str)
+TypeConverter::Type TypeConverter::getLiteralType(const std::string &str)
 {
     TypeAction actions[4] = {
         {  isChar,   Char},
