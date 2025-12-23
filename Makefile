@@ -2,7 +2,7 @@ RM  = rm
 CXX = c++
 
 RMFLAGS  = -rf 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 DEPS = TypeConverter.hpp 
 SRCS = TypeConverter.cpp
