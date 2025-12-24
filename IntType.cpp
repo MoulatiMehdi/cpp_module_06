@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string>
 
-IntType::IntType() : AType()
+IntType::IntType() : AType("")
 {
     updateState();
 }
@@ -26,7 +26,9 @@ IntType::~IntType()
 
 void IntType::updateState()
 {
-    if (isspace(_str.at(0)))
+    if (_state != Pass)
+        return;
+    if (_str.empty() || isspace(_str.at(0)))
         _state = Error;
     else
     {
@@ -41,12 +43,11 @@ void IntType::convert()
 {
     if (_state != Pass)
         return error();
-
     if (std::numeric_limits<char>::max() < _value ||
         std::numeric_limits<char>::min() > _value)
-        std::cout << "char : Impossible" << std::endl;
+        error("char", Error);
     else if (!std::isprint(_value))
-        std::cout << "char : Not Displayable" << std::endl;
+        error("char", Hidden);
     else
         std::cout << "char : " << static_cast<char>(_value) << std::endl;
 
