@@ -2,6 +2,7 @@
 #include <cctype>
 #include <iostream>
 #include <limits>
+#include <sstream>
 #include <string>
 
 IntType::IntType() : AType()
