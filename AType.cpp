@@ -4,15 +4,15 @@
 
 const std::string AType::DEFAULT = "";
 
-AType::AType() : _str(DEFAULT), _iss(DEFAULT)
+AType::AType() : _str(DEFAULT), _state(Pass)
 {
 }
 
-AType::AType(const std::string &str) : _str(str), _iss(str)
+AType::AType(const std::string &str) : _str(str), _state(Pass)
 {
 }
 
-AType::AType(const AType &other) : _str(other._str), _iss(other._str)
+AType::AType(const AType &other) : _str(other._str), _state(Pass)
 {
 }
 
@@ -25,12 +25,12 @@ AType::~AType()
 {
 }
 
-void AType::updateState()
+void AType::error()
 {
-    if (_iss.eof() && !_iss.fail())
-        _state = Pass;
-    else
-        _state = Error;
+    msg("char", Error);
+    msg("int", Error);
+    msg("float", Error);
+    msg("double", Error);
 }
 
 void AType::msg(const std::string &label, const State &state)
