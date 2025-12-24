@@ -11,12 +11,10 @@ class IntType : AType
     IntType(const IntType &other);
     ~IntType();
 
-    bool isValid();
+    void updateState();
     void convert();
 
   private:
     IntType();
     IntType &operator<<(const IntType &other);
 };
-
-

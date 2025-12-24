@@ -6,17 +6,16 @@
 
 IntType::IntType() : AType()
 {
+    updateState();
 }
 
 IntType::IntType(const std::string &str) : AType(str)
 {
-    _iss >> _value;
     updateState();
 }
 
 IntType::IntType(const IntType &other) : AType(other)
 {
-    _iss >> _value;
     updateState();
 }
 
@@ -24,16 +23,23 @@ IntType::~IntType()
 {
 }
 
+void IntType::updateState()
+{
+    if (isspace(_str.at(0)))
+        _state = Error;
+    else
+    {
+        std::istringstream iss(_str);
+        iss >> _value;
+        if (!iss.eof() || iss.fail())
+            _state = Error;
+    }
+}
+
 void IntType::convert()
 {
     if (_state != Pass)
-    {
-        msg("char", _state);
-        msg("int", _state);
-        msg("float", _state);
-        msg("double", _state);
-        return;
-    }
+        return error();
 
     if (std::numeric_limits<char>::max() < _value ||
         std::numeric_limits<char>::min() > _value)
@@ -46,9 +52,4 @@ void IntType::convert()
     std::cout << "int : " << _value << std::endl;
     std::cout << "float : " << static_cast<float>(_value) << std::endl;
     std::cout << "double : " << static_cast<double>(_value) << std::endl;
-}
-
-bool IntType::isValid()
-{
-    return _state == Pass;
 }
