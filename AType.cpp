@@ -27,13 +27,13 @@ AType::~AType()
 
 void AType::error()
 {
-    msg("char", Error);
-    msg("int", Error);
-    msg("float", Error);
-    msg("double", Error);
+    error("char", Error);
+    error("int", Error);
+    error("float", Error);
+    error("double", Error);
 }
 
-void AType::msg(const std::string &label, const State &state)
+void AType::error(const std::string &label, const State &state)
 {
     switch (state)
     {
