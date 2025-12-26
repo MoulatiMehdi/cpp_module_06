@@ -25,7 +25,12 @@ AType::~AType()
 {
 }
 
-void AType::error()
+AType::State AType::getState() const
+{
+    return _state;
+}
+
+void AType::unknown()
 {
     error("char", Error);
     error("int", Error);
