@@ -10,17 +10,16 @@ class AType
         Pass
     };
 
-    void msg(const std::string &label, const State &state);
-
-    AType();
     AType(const std::string &str);
     AType(const AType &other);
     ~AType();
 
+    State        getState() const;
     virtual void convert()     = 0;
     virtual void updateState() = 0;
 
-    void error();
+    static void unknown();
+    static void error(const std::string &label, const State &state);
 
   protected:
     const std::string &_str;
@@ -28,5 +27,6 @@ class AType
 
   private:
     static const std::string DEFAULT;
-    AType                   &operator=(const AType &other);
+    AType();
+    AType &operator=(const AType &other);
 };
