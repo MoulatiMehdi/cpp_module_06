@@ -1,20 +1,22 @@
 #include "AType.hpp"
 #include <string>
 
-class DoubleType : AType
+class DoubleType : public AType
 {
   private:
-    int _value;
+    double _value;
 
   public:
     DoubleType(const std::string &str);
     DoubleType(const DoubleType &other);
     ~DoubleType();
 
-    void updateState();
     void convert();
+    bool isPseudo();
+    bool isValid();
 
   private:
+    void updateState();
     DoubleType();
     DoubleType &operator<<(const DoubleType &other);
 };
