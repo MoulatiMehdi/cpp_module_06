@@ -1,7 +1,7 @@
 #include "AType.hpp"
 #include <string>
 
-class IntType : AType
+class IntType : public AType
 {
   private:
     int _value;
