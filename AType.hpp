@@ -1,7 +1,6 @@
 #ifndef A_TYPE_HPP
 #define A_TYPE_HPP
 
-
 #include <string>
 
 class AType

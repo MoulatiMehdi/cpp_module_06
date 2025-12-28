@@ -1,3 +1,6 @@
+#ifndef FLOAT_TYPE_HPP
+#define FLOAT_TYPE_HPP
+
 #include "AType.hpp"
 #include <string>
 
@@ -20,3 +23,5 @@ class FloatType : public AType
     FloatType();
     FloatType &operator<<(const FloatType &other);
 };
+
+#endif
