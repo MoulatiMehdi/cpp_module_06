@@ -42,7 +42,7 @@ void IntType::updateState()
 void IntType::convert()
 {
     if (_state != Pass)
-        return error();
+        return unknown();
     if (std::numeric_limits<char>::max() < _value ||
         std::numeric_limits<char>::min() > _value)
         error("char", Error);
