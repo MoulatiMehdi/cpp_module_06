@@ -69,14 +69,14 @@ int main()
         {          "1",  AType::Pass},
         {"-2147483648",  AType::Pass},
         { "2147483647",  AType::Pass},
-        { "2147483648",  AType::Error},
-        {"-2147483649",  AType::Error},
-        {"-",  AType::Error},
-        {"+",  AType::Error},
-        {"+0",  AType::Pass},
-        {"-0",  AType::Pass},
-        {"--",  AType::Error},
-        {"++",  AType::Error},
+        { "2147483648", AType::Error},
+        {"-2147483649", AType::Error},
+        {          "-", AType::Error},
+        {          "+", AType::Error},
+        {         "+0",  AType::Pass},
+        {         "-0",  AType::Pass},
+        {         "--", AType::Error},
+        {         "++", AType::Error},
     };
 
     const int size  = SIZE(tests);
