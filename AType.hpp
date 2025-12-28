@@ -1,3 +1,7 @@
+#ifndef A_TYPE_HPP
+#define A_TYPE_HPP
+
+
 #include <string>
 
 class AType
@@ -12,7 +16,7 @@ class AType
 
     AType(const std::string &str);
     AType(const AType &other);
-    ~AType();
+    virtual ~AType();
 
     State        getState() const;
     virtual void convert()     = 0;
@@ -30,3 +34,5 @@ class AType
     AType();
     AType &operator=(const AType &other);
 };
+
+#endif
