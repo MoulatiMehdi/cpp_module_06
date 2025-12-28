@@ -1,3 +1,6 @@
+#ifndef INT_TYPE_HPP
+#define INT_TYPE_HPP
+
 #include "AType.hpp"
 #include <string>
 
@@ -18,3 +21,5 @@ class IntType : public AType
     IntType();
     IntType &operator<<(const IntType &other);
 };
+
+#endif

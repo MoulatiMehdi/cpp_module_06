@@ -1,3 +1,6 @@
+#ifndef DOUBLE_TYPE_HPP
+#define DOUBLE_TYPE_HPP
+
 #include "AType.hpp"
 #include <string>
 
@@ -20,3 +23,5 @@ class DoubleType : public AType
     DoubleType();
     DoubleType &operator<<(const DoubleType &other);
 };
+
+#endif
