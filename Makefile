@@ -5,26 +5,21 @@ RMFLAGS  = -rf
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 DEPS = AType.hpp DoubleType.hpp IntType.hpp FloatType.hpp CharType.hpp Printer.hpp 
-SRCS = AType.cpp DoubleType.cpp IntType.cpp FloatType.cpp CharType.cpp Printer.cpp
-TEST_SRCS = $(SRCS) tests/main.test.cpp
+SRCS = AType.cpp DoubleType.cpp IntType.cpp FloatType.cpp CharType.cpp Printer.cpp main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
-TEST = test
 NAME = run 
 
-all : $(TEST)
+all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ 
+	$(CXX) $(CXXFLAGS) $^ -o $@  -I ./
 
 %.o : %.c $(DEPS)
 	$(CXX) $(CXXFLAGS) -c  $< -o $@
 
 clean : 
 	$(RM) $(RMFLAGS) $(OBJS)
-
-test : $(TEST_SRCS) 
-	$(CXX) $(CXXFLAGS) $^ -o $@  -I ./
 
 fclean : clean 
 	$(RM) $(RMFLAGS) $(NAME) $(TEST)
