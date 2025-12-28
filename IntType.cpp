@@ -1,6 +1,7 @@
 #include "IntType.hpp"
 #include "Printer.hpp"
 #include <cctype>
+#include <ios>
 #include <iostream>
 #include <limits>
 #include <sstream>
@@ -12,15 +13,10 @@ IntType::IntType() : AType("0"), _value(0)
 
 IntType::IntType(const std::string &str) : AType(str), _value(0)
 {
-    if (_str.empty() || isspace(_str.at(0)))
+    std::istringstream iss(_str);
+    iss >> std::noskipws >> _value;
+    if (!iss.eof() || iss.fail())
         _state = Error;
-    else
-    {
-        std::istringstream iss(_str);
-        iss >> _value;
-        if (!iss.eof() || iss.fail())
-            _state = Error;
-    }
 }
 
 IntType::IntType(const IntType &other) : AType(other), _value(other._value)

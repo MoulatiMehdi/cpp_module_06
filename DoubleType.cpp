@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <cstdlib>
 #include <cstring>
+#include <ios>
 #include <iostream>
 #include <limits>
 #include <sstream>
@@ -19,14 +20,14 @@ DoubleType::DoubleType(const std::string &str)
       _value(0),
       _isPseudo(isPseudo(str))
 {
-    if (!isValid())
-        _state = Error;
-    else if (_isPseudo)
+    if (_isPseudo)
         _value = strtod(_str.c_str(), NULL);
+    else if (!isValid())
+        _state = Error;
     else
     {
         std::istringstream iss(_str);
-        iss >> _value;
+        iss >> std::noskipws >> _value;
         if (!iss.eof() || iss.fail())
             _state = Error;
     }
@@ -45,7 +46,7 @@ DoubleType::~DoubleType()
 
 bool DoubleType::isValid() const
 {
-    if (_str.empty())
+    if (_str.find(".") == std::string::npos)
         return false;
     if (_isPseudo)
         return true;
@@ -81,7 +82,7 @@ void DoubleType::convert() const
             Printer::show(static_cast<int>(_value));
 
         if (std::numeric_limits<float>::max() < _value ||
-            std::numeric_limits<float>::min() > _value)
+            -std::numeric_limits<float>::max() > _value)
             Printer::fail(static_cast<float>(_value));
         else
             Printer::show(static_cast<float>(_value));

@@ -5,11 +5,11 @@
 #include <cstddef>
 #include <cstdlib>
 #include <cstring>
+#include <ios>
 #include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>
-
 
 FloatType::FloatType() : AType("0.0f"), _value(0), _isPseudo(false)
 {
@@ -20,15 +20,15 @@ FloatType::FloatType(const std::string &str)
       _value(0),
       _isPseudo(isPseudo(_str))
 {
-    if (!isValid())
-        _state = Error;
-    else if (_isPseudo)
+    if (_isPseudo)
         _value = strtof(_str.c_str(), NULL);
+    else if (!isValid())
+        _state = Error;
     else
     {
         std::istringstream iss(_str);
         std::string        s;
-        iss >> _value;
+        iss >> std::noskipws >> _value;
         std::getline(iss, s);
         if (iss.fail() || s != "f")
             _state = Error;
@@ -53,7 +53,7 @@ bool FloatType::isPseudo(const std::string &str)
 
 bool FloatType::isValid() const
 {
-    if (_str.empty())
+    if (_str.find(".") == std::string::npos)
         return false;
     if (_isPseudo)
         return true;
@@ -68,8 +68,9 @@ void FloatType::convert() const
     else
         Printer::show(static_cast<char>(_value));
 
-    if (_isPseudo || std::numeric_limits<int>::max() < _value ||
-        std::numeric_limits<int>::min() > _value)
+    if (_isPseudo ||
+        std::numeric_limits<int>::max() < static_cast<long>(_value) ||
+        std::numeric_limits<int>::min() > static_cast<long>(_value))
         Printer::fail(static_cast<int>(_value));
     else
         Printer::show(static_cast<int>(_value));

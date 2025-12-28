@@ -5,6 +5,7 @@
 #include "IntType.hpp"
 #include "Printer.hpp"
 #include <iostream>
+#include <string>
 
 int main(int argc, char *argv[])
 {
@@ -27,8 +28,10 @@ int main(int argc, char *argv[])
     {
         if (a[i]->getState() == AType::Pass)
         {
+            std::cout << i << std::endl;
             a[i]->convert();
             pass = true;
+            std::cout << std::string(50, '-') << std::endl;
         }
     }
     if (!pass)
