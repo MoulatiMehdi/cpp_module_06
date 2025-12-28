@@ -7,7 +7,7 @@
 class CharType : public AType
 {
   private:
-    int _value;
+    char _value;
 
   public:
     CharType(const std::string &str);
@@ -15,7 +15,7 @@ class CharType : public AType
     ~CharType();
 
     void updateState();
-    void convert();
+    void convert() const;
 
   private:
     CharType();

@@ -9,7 +9,6 @@ class AType
     enum State
     {
         Error,
-        Hidden,
         Pass
     };
 
@@ -18,11 +17,8 @@ class AType
     virtual ~AType();
 
     State        getState() const;
-    virtual void convert()     = 0;
-    virtual void updateState() = 0;
 
-    static void unknown();
-    static void error(const std::string &label, const State &state);
+    virtual void convert() const = 0;
 
   protected:
     const std::string &_str;

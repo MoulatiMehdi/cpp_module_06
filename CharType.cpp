@@ -1,21 +1,22 @@
 #include "CharType.hpp"
-#include <cctype>
-#include <iostream>
+#include "Printer.hpp"
 #include <string>
 
-CharType::CharType() : AType("")
+CharType::CharType() : AType("0"), _value('0')
 {
     updateState();
 }
 
-CharType::CharType(const std::string &str) : AType(str)
+CharType::CharType(const std::string &str) : AType(str), _value(0)
 {
-    updateState();
+    if (_str.length() != 1 || std::isdigit(_str[0]))
+        _state = Error;
+    else
+        _value = _str[0];
 }
 
-CharType::CharType(const CharType &other) : AType(other)
+CharType::CharType(const CharType &other) : AType(other), _value(other._value)
 {
-    updateState();
 }
 
 CharType::~CharType()
@@ -24,20 +25,12 @@ CharType::~CharType()
 
 void CharType::updateState()
 {
-    if (_state != Pass)
-        return;
-    if (_str.length() != 1 || std::isdigit(_str[0]))
-        _state = Error;
-    _value = _str[0];
 }
 
-void CharType::convert()
+void CharType::convert() const
 {
-    if (!std::isprint(_value))
-        error("char", Hidden);
-    else
-        std::cout << "char : " << _value << std::endl;
-    std::cout << "int : " << static_cast<char>(_value) << std::endl;
-    std::cout << "float : " << static_cast<float>(_value) << std::endl;
-    std::cout << "double : " << static_cast<double>(_value) << std::endl;
+    Printer::show(static_cast<char>(_value));
+    Printer::show(static_cast<int>(_value));
+    Printer::show(static_cast<float>(_value));
+    Printer::show(static_cast<double>(_value));
 }

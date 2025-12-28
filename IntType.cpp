@@ -1,33 +1,17 @@
 #include "IntType.hpp"
+#include "Printer.hpp"
 #include <cctype>
 #include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>
 
-IntType::IntType() : AType("")
-{
-    updateState();
-}
-
-IntType::IntType(const std::string &str) : AType(str)
-{
-    updateState();
-}
-
-IntType::IntType(const IntType &other) : AType(other)
-{
-    updateState();
-}
-
-IntType::~IntType()
+IntType::IntType() : AType("0"), _value(0)
 {
 }
 
-void IntType::updateState()
+IntType::IntType(const std::string &str) : AType(str), _value(0)
 {
-    if (_state != Pass)
-        return;
     if (_str.empty() || isspace(_str.at(0)))
         _state = Error;
     else
@@ -39,19 +23,23 @@ void IntType::updateState()
     }
 }
 
-void IntType::convert()
+IntType::IntType(const IntType &other) : AType(other), _value(other._value)
 {
-    if (_state != Pass)
-        return unknown();
+}
+
+IntType::~IntType()
+{
+}
+
+void IntType::convert() const
+{
     if (std::numeric_limits<char>::max() < _value ||
         std::numeric_limits<char>::min() > _value)
-        error("char", Error);
-    else if (!std::isprint(_value))
-        error("char", Hidden);
+        Printer::fail(static_cast<char>(_value));
     else
-        std::cout << "char : " << static_cast<char>(_value) << std::endl;
+        Printer::show(static_cast<char>(_value));
 
-    std::cout << "int : " << _value << std::endl;
-    std::cout << "float : " << static_cast<float>(_value) << std::endl;
-    std::cout << "double : " << static_cast<double>(_value) << std::endl;
+    Printer::show(static_cast<int>(_value));
+    Printer::show(static_cast<float>(_value));
+    Printer::show(static_cast<double>(_value));
 }

@@ -14,8 +14,9 @@ class IntType : public AType
     IntType(const IntType &other);
     ~IntType();
 
+    void convert() const;
+
     void updateState();
-    void convert();
 
   private:
     IntType();

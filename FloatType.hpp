@@ -8,18 +8,19 @@ class FloatType : public AType
 {
   private:
     float _value;
+    bool  _isPseudo;
 
   public:
     FloatType(const std::string &str);
     FloatType(const FloatType &other);
     ~FloatType();
 
-    void convert();
-    bool isPseudo();
-    bool isValid();
+    void convert() const;
+    bool isValid() const;
+
+    static bool isPseudo(const std::string &str);
 
   private:
-    void updateState();
     FloatType();
     FloatType &operator<<(const FloatType &other);
 };

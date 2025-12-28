@@ -1,42 +1,27 @@
 #include "DoubleType.hpp"
+#include "Printer.hpp"
 #include <cctype>
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
 #include <cstring>
-#include <iomanip>
 #include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>
 
-DoubleType::DoubleType() : AType(""), _value(0)
+DoubleType::DoubleType() : AType("0.0"), _value(0), _isPseudo(false)
 {
 }
 
-DoubleType::DoubleType(const std::string &str) : AType(str), _value(0)
+DoubleType::DoubleType(const std::string &str)
+    : AType(str),
+      _value(0),
+      _isPseudo(isPseudo(str))
 {
-    updateState();
-}
-
-DoubleType::DoubleType(const DoubleType &other)
-    : AType(other),
-      _value(other._value)
-{
-}
-
-DoubleType::~DoubleType()
-{
-}
-
-void DoubleType::updateState()
-{
-    if (_state != Pass)
-        return;
-
     if (!isValid())
         _state = Error;
-    else if (isPseudo())
+    else if (_isPseudo)
         _value = strtod(_str.c_str(), NULL);
     else
     {
@@ -47,57 +32,60 @@ void DoubleType::updateState()
     }
 }
 
-bool DoubleType::isValid()
+DoubleType::DoubleType(const DoubleType &other)
+    : AType(other),
+      _value(other._value),
+      _isPseudo(other._isPseudo)
 {
-    if (_str.empty() || isspace(_str[0]))
+}
+
+DoubleType::~DoubleType()
+{
+}
+
+bool DoubleType::isValid() const
+{
+    if (_str.empty())
         return false;
-    if (isPseudo())
+    if (_isPseudo)
         return true;
+    return _str.find_first_not_of("0123456789.-+") == std::string::npos;
+}
 
-    std::size_t i = 0;
-    if (strchr("+-", _str[0]) != NULL)
-        i++;
-    while (i < _str.length())
+bool DoubleType::isPseudo(const std::string &str)
+{
+    return str == "+inf" || str == "-inf" || str == "nan";
+}
+
+void DoubleType::convert() const
+{
+    if (_isPseudo)
     {
-        if (!std::isdigit(_str[i]) && _str[i] != '.')
-            return false;
-        i++;
+        Printer::fail(static_cast<char>(_value));
+        Printer::fail(static_cast<int>(_value));
+        Printer::show(static_cast<float>(_value));
+        Printer::show(static_cast<double>(_value));
     }
-    return _str.find('.') != std::string::npos;
-}
-
-bool DoubleType::isPseudo()
-{
-    return _str == "+inf" || _str == "-inf" || _str == "nan";
-}
-
-void DoubleType::convert()
-{
-    if (_state != Pass)
-        return unknown();
-
-    if (isPseudo() || _value > std::numeric_limits<char>::max() ||
-        _value < std::numeric_limits<char>::min())
-        error("char", Error);
-    else if (!std::isprint(_value))
-        error("char", Hidden);
     else
-        std::cout << "char : '" << static_cast<char>(_value) << "'"
-                  << std::endl;
+    {
+        if (std::numeric_limits<char>::max() < _value ||
+            std::numeric_limits<char>::min() > _value)
+            Printer::fail(static_cast<char>(_value));
+        else
+            Printer::show(static_cast<char>(_value));
 
-    if (isPseudo() || std::numeric_limits<int>::max() < _value ||
-        std::numeric_limits<int>::min() > _value)
-        error("int", Error);
-    else
-        std::cout << "int : " << static_cast<int>(_value) << std::endl;
+        if (std::numeric_limits<int>::max() < _value ||
+            std::numeric_limits<int>::min() > _value)
+            Printer::fail(static_cast<int>(_value));
+        else
+            Printer::show(static_cast<int>(_value));
 
-    if (!isPseudo() && (_value > std::numeric_limits<float>::max() ||
-                        _value < -std::numeric_limits<float>::max()))
-        error("float", Error);
-    else
-        std::cout << "float : " << std::fixed << std::setprecision(1)
-                  << static_cast<float>(_value) << "f" << std::endl;
+        if (std::numeric_limits<float>::max() < _value ||
+            std::numeric_limits<float>::min() > _value)
+            Printer::fail(static_cast<float>(_value));
+        else
+            Printer::show(static_cast<float>(_value));
 
-    std::cout << "double : " << std::fixed << std::setprecision(1)
-              << static_cast<double>(_value) << std::endl;
+        Printer::show(static_cast<double>(_value));
+    }
 }

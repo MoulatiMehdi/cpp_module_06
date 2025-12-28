@@ -1,44 +1,29 @@
 #include "FloatType.hpp"
+#include "Printer.hpp"
 #include <cctype>
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
 #include <cstring>
-#include <iomanip>
 #include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>
 
-FloatType::FloatType() : AType(""), _value(0)
-{
-    updateState();
-}
 
-FloatType::FloatType(const std::string &str) : AType(str), _value(0)
-{
-    updateState();
-}
-
-FloatType::FloatType(const FloatType &other)
-    : AType(other),
-      _value(other._value)
+FloatType::FloatType() : AType("0.0f"), _value(0), _isPseudo(false)
 {
 }
 
-FloatType::~FloatType()
+FloatType::FloatType(const std::string &str)
+    : AType(str),
+      _value(0),
+      _isPseudo(isPseudo(_str))
 {
-}
-
-void FloatType::updateState()
-{
-    if (_state != Pass)
-        return;
-
     if (!isValid())
         _state = Error;
-    else if (isPseudo())
-        _value = strtod(_str.c_str(), NULL);
+    else if (_isPseudo)
+        _value = strtof(_str.c_str(), NULL);
     else
     {
         std::istringstream iss(_str);
@@ -50,53 +35,45 @@ void FloatType::updateState()
     }
 }
 
-bool FloatType::isValid()
+FloatType::FloatType(const FloatType &other)
+    : AType(other),
+      _value(other._value),
+      _isPseudo(other._isPseudo)
 {
-    if (_str.empty() || isspace(_str[0]))
+}
+
+FloatType::~FloatType()
+{
+}
+
+bool FloatType::isPseudo(const std::string &str)
+{
+    return str == "+inff" || str == "-inff" || str == "nanf";
+}
+
+bool FloatType::isValid() const
+{
+    if (_str.empty())
         return false;
-    if (isPseudo())
+    if (_isPseudo)
         return true;
-
-    std::size_t i = 0;
-    if (strchr("+-", _str[0]) != NULL)
-        i++;
-    while (i < _str.length())
-    {
-        if (!std::isdigit(_str[i]) && _str[i] != '.' && _str[i] != 'f')
-            return false;
-        i++;
-    }
-    return _str.find('.') != std::string::npos;
+    return _str.find_first_not_of("0123456789.+-f") == std::string::npos;
 }
 
-bool FloatType::isPseudo()
+void FloatType::convert() const
 {
-    return _str == "+inff" || _str == "-inff" || _str == "nanf";
-}
-
-void FloatType::convert()
-{
-    if (_state != Pass)
-        return unknown();
-
-    if (isPseudo() || _value > std::numeric_limits<char>::max() ||
-        _value < std::numeric_limits<char>::min())
-        error("char", Error);
-    else if (!std::isprint(_value))
-        error("char", Hidden);
+    if (_isPseudo || std::numeric_limits<char>::max() < _value ||
+        std::numeric_limits<char>::min() > _value)
+        Printer::fail(static_cast<char>(_value));
     else
-        std::cout << "char : '" << static_cast<char>(_value) << "'"
-                  << std::endl;
+        Printer::show(static_cast<char>(_value));
 
-    if (isPseudo() || std::numeric_limits<int>::max() < _value ||
+    if (_isPseudo || std::numeric_limits<int>::max() < _value ||
         std::numeric_limits<int>::min() > _value)
-        error("int", Error);
+        Printer::fail(static_cast<int>(_value));
     else
-        std::cout << "int : " << static_cast<int>(_value) << std::endl;
+        Printer::show(static_cast<int>(_value));
 
-    std::cout << "float : " << std::fixed << std::setprecision(1)
-              << static_cast<float>(_value) << "f" << std::endl;
-
-    std::cout << "double : " << std::fixed << std::setprecision(1)
-              << static_cast<double>(_value) << std::endl;
+    Printer::show(static_cast<float>(_value));
+    Printer::show(static_cast<double>(_value));
 }

@@ -8,15 +8,17 @@ class DoubleType : public AType
 {
   private:
     double _value;
+    bool   _isPseudo;
 
   public:
     DoubleType(const std::string &str);
     DoubleType(const DoubleType &other);
     ~DoubleType();
 
-    void convert();
-    bool isPseudo();
-    bool isValid();
+    void        convert() const;
+    bool        isValid() const;
+
+    static bool isPseudo(const std::string &str);
 
   private:
     void updateState();
