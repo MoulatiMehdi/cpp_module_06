@@ -12,6 +12,7 @@
 
 FloatType::FloatType() : AType(""), _value(0)
 {
+    updateState();
 }
 
 FloatType::FloatType(const std::string &str) : AType(str), _value(0)
@@ -43,8 +44,8 @@ void FloatType::updateState()
         std::istringstream iss(_str);
         std::string        s;
         iss >> _value;
-        iss >> s;
-        if (!iss.eof() || iss.fail() || s != "f")
+        std::getline(iss, s);
+        if (iss.fail() || s != "f")
             _state = Error;
     }
 }
@@ -61,7 +62,7 @@ bool FloatType::isValid()
         i++;
     while (i < _str.length())
     {
-        if (!std::isdigit(_str[i]) && _str[i] != '.')
+        if (!std::isdigit(_str[i]) && _str[i] != '.' && _str[i] != 'f')
             return false;
         i++;
     }

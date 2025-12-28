@@ -4,7 +4,7 @@
 class FloatType : public AType
 {
   private:
-    double _value;
+    float _value;
 
   public:
     FloatType(const std::string &str);
