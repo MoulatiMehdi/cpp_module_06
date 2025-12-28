@@ -4,8 +4,8 @@ CXX = c++
 RMFLAGS  = -rf 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
-DEPS = AType.hpp DoubleType.hpp IntType.hpp FloatType.hpp CharType.hpp 
-SRCS = AType.cpp DoubleType.cpp IntType.cpp FloatType.cpp CharType.cpp
+DEPS = AType.hpp DoubleType.hpp IntType.hpp FloatType.hpp CharType.hpp Printer.hpp 
+SRCS = AType.cpp DoubleType.cpp IntType.cpp FloatType.cpp CharType.cpp Printer.cpp
 TEST_SRCS = $(SRCS) tests/main.test.cpp
 
 OBJS = $(SRCS:.cpp=.o)
