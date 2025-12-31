@@ -36,12 +36,17 @@ int main(int, char *[])
     }
 
     {
+        std::cout << "\tGenerate function with pointer : " << std::endl;
         Base *a = generate();
         identify(a);
+        delete a;
+        std::cout << std::string(50, '-') << std::endl;
     }
     {
+        std::cout << "\tGenerate function with reference : " << std::endl;
         Base &a = *generate();
         identify(a);
+        delete &a;
         std::cout << std::string(50, '-') << std::endl;
     }
     return 0;
