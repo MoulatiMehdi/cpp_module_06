@@ -2,7 +2,7 @@ RM  = rm
 CXX = c++
 
 RMFLAGS  = -rf 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 DEPS = ./Base.hpp ./A.hpp ./B.hpp ./C.hpp 
 SRCS = ./Base.cpp ./main.cpp
@@ -15,15 +15,15 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@  -I ./
 
-%.o : %.c $(DEPS)
+%.o : %.cpp $(DEPS)
 	$(CXX) $(CXXFLAGS) -c  $< -o $@
 
 clean : 
 	$(RM) $(RMFLAGS) $(OBJS)
 
 fclean : clean 
-	$(RM) $(RMFLAGS) $(NAME) $(TEST)
+	$(RM) $(RMFLAGS) $(NAME) 
 
 re : fclean all 
 
-.PHONY : re fclean clean all test 
+.PHONY : re fclean clean all 
