@@ -1,11 +1,7 @@
 #include "IntType.hpp"
 #include "Printer.hpp"
-#include <cctype>
-#include <ios>
-#include <iostream>
 #include <limits>
 #include <sstream>
-#include <string>
 
 IntType::IntType() : AType("0"), _value(0)
 {

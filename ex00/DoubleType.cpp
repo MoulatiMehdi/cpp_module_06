@@ -1,12 +1,6 @@
 #include "DoubleType.hpp"
 #include "Printer.hpp"
-#include <cctype>
 #include <cmath>
-#include <cstddef>
-#include <cstdlib>
-#include <cstring>
-#include <ios>
-#include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>

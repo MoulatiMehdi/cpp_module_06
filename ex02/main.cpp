@@ -10,29 +10,20 @@
 int main(int, char *[])
 {
     std::srand(std::time(0));
+
+    Base *objs[] = {
+        new Base(),
+        new A(),
+        new B(),
+        new C(),
+    };
+
+    for (int i = 0; i < 4; i++)
     {
-        Base a;
-        identify(a);
-        identify(&a);
+        identify(*objs[i]);
+        identify(objs[i]);
         std::cout << std::string(50, '-') << std::endl;
-    }
-    {
-        A a;
-        identify(a);
-        identify(&a);
-        std::cout << std::string(50, '-') << std::endl;
-    }
-    {
-        B a;
-        identify(a);
-        identify(&a);
-        std::cout << std::string(50, '-') << std::endl;
-    }
-    {
-        C a;
-        identify(a);
-        identify(&a);
-        std::cout << std::string(50, '-') << std::endl;
+        delete objs[i];
     }
 
     {

@@ -13,7 +13,7 @@ NAME = run
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@  -I ./
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o : %.cpp $(DEPS)
 	$(CXX) $(CXXFLAGS) -c  $< -o $@
@@ -22,8 +22,8 @@ clean :
 	$(RM) $(RMFLAGS) $(OBJS)
 
 fclean : clean 
-	$(RM) $(RMFLAGS) $(NAME)
+	$(RM) $(RMFLAGS) $(NAME) 
 
 re : fclean all 
 
-.PHONY : re fclean clean all 
+.PHONY : re fclean clean all  

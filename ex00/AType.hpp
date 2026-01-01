@@ -16,7 +16,7 @@ class AType
     AType(const AType &other);
     virtual ~AType();
 
-    State        getState() const;
+    State getState() const;
 
     virtual void convert() const = 0;
 

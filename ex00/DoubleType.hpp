@@ -15,8 +15,8 @@ class DoubleType : public AType
     DoubleType(const DoubleType &other);
     ~DoubleType();
 
-    void        convert() const;
-    bool        isValid() const;
+    void convert() const;
+    bool isValid() const;
 
     static bool isPseudo(const std::string &str);
 

@@ -1,15 +1,8 @@
 #include "FloatType.hpp"
 #include "Printer.hpp"
-#include <cctype>
 #include <cmath>
-#include <cstddef>
-#include <cstdlib>
-#include <cstring>
-#include <ios>
-#include <iostream>
 #include <limits>
 #include <sstream>
-#include <string>
 
 FloatType::FloatType() : AType("0.0f"), _value(0), _isPseudo(false)
 {

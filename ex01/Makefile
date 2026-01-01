@@ -13,7 +13,7 @@ NAME = run
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@  -I ./
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o : %.cpp $(DEPS)
 	$(CXX) $(CXXFLAGS) -c  $< -o $@

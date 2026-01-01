@@ -1,14 +1,15 @@
 #include "Data.hpp"
+#include <string>
 
-Data::Data() : _value(0)
+Data::Data() : name("unknown"), age(0)
 {
 }
 
-Data::Data(int value) : _value(value)
+Data::Data(const std::string &name, int value) : name(name), age(value)
 {
 }
 
-Data::Data(const Data &other) : _value(other._value)
+Data::Data(const Data &other) : name(other.name), age(other.age)
 {
 }
 
@@ -16,10 +17,21 @@ Data &Data::operator=(const Data &other)
 {
     if (this == &other)
         return *this;
-    _value = other._value;
+    age  = other.age;
+    name = other.name;
     return *this;
 }
 
 Data::~Data()
 {
+}
+
+int Data::getAge() const
+{
+    return age;
+}
+
+const std::string Data::getName() const
+{
+    return name;
 }
